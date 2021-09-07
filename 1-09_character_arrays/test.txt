@@ -1,8 +1,0 @@
-aaa 			b
-c
-
-The variables in main, such as line, longest, etc., are private or local to main. Because they are declared within main, no other function can have direct access to them. The same is true of the variables in other functions; for example, the variable i in getline is unrelated to the i in copy. Each local variable in a function come into existence only when the function is called, and disappears when the function is exited.
-
-
-
-g
