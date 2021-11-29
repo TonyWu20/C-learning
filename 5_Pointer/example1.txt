@@ -1,0 +1,81 @@
+Ready to sort: 9 2 3 1 8 7 6 (null)
+At beginning: left = 0, last = 0
+v[1]: 2, v[0]: 9
+Swap v[1]: 2 and v[1]: 2
+After swap: 9 2 3 1 8 7 6 (null)
+Change last to:1
+v[2]: 3, v[0]: 9
+Swap v[2]: 3 and v[2]: 3
+After swap: 9 2 3 1 8 7 6 (null)
+Change last to:2
+v[3]: 1, v[0]: 9
+Swap v[3]: 1 and v[3]: 1
+After swap: 9 2 3 1 8 7 6 (null)
+Change last to:3
+v[4]: 8, v[0]: 9
+Swap v[4]: 8 and v[4]: 8
+After swap: 9 2 3 1 8 7 6 (null)
+Change last to:4
+v[5]: 7, v[0]: 9
+Swap v[5]: 7 and v[5]: 7
+After swap: 9 2 3 1 8 7 6 (null)
+Change last to:5
+v[6]: 6, v[0]: 9
+Swap v[6]: 6 and v[6]: 6
+After swap: 9 2 3 1 8 7 6 (null)
+Change last to:6
+After loop: left = 0, last = 6
+For next step: 6 2 3 1 8 7 9 (null)
+	Sort left: 0, 5
+Ready to sort: 3 2 6 1 8 7 9 (null)
+At beginning: left = 0, last = 0
+v[1]: 2, v[0]: 3
+Swap v[1]: 2 and v[1]: 2
+After swap: 3 2 6 1 8 7 9 (null)
+Change last to:1
+v[3]: 1, v[0]: 3
+Swap v[2]: 1 and v[3]: 6
+After swap: 3 2 1 6 8 7 9 (null)
+Change last to:2
+After loop: left = 0, last = 2
+For next step: 1 2 3 6 8 7 9 (null)
+	Sort left: 0, 1
+Ready to sort: 1 2 3 6 8 7 9 (null)
+At beginning: left = 0, last = 0
+After loop: left = 0, last = 0
+For next step: 1 2 3 6 8 7 9 (null)
+	Sort left: 0, -1
+	Sort right: 1, 1
+	Sort right: 3, 5
+Ready to sort: 1 2 3 8 6 7 9 (null)
+At beginning: left = 3, last = 3
+v[4]: 6, v[3]: 8
+Swap v[4]: 6 and v[4]: 6
+After swap: 1 2 3 8 6 7 9 (null)
+Change last to:4
+v[5]: 7, v[3]: 8
+Swap v[5]: 7 and v[5]: 7
+After swap: 1 2 3 8 6 7 9 (null)
+Change last to:5
+After loop: left = 3, last = 5
+For next step: 1 2 3 7 6 8 9 (null)
+	Sort left: 3, 4
+Ready to sort: 1 2 3 7 6 8 9 (null)
+At beginning: left = 3, last = 3
+v[4]: 6, v[3]: 7
+Swap v[4]: 6 and v[4]: 6
+After swap: 1 2 3 7 6 8 9 (null)
+Change last to:4
+After loop: left = 3, last = 4
+For next step: 1 2 3 6 7 8 9 (null)
+	Sort left: 3, 3
+	Sort right: 5, 4
+	Sort right: 6, 5
+	Sort right: 7, 6
+1
+2
+3
+6
+7
+8
+9
