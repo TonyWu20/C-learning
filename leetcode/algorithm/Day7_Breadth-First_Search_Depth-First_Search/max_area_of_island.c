@@ -19,21 +19,16 @@ int maxAreaOfIsland(int **grid, int gridSize, int *gridColSize)
 {
     int checked[gridSize][*gridColSize];
     int maxArea = 0;
-    for (int i = 0; i < gridSize; i++)
+    for (int i = 0; i < gridSize * (*gridColSize); i++)
     {
-        for (int j = 0; j < *gridColSize; j++)
-        {
-            checked[i][j] = 0;
-        }
+        checked[i / (*gridColSize)][i % (*gridColSize)] = 0;
     }
-    for (int i = 0; i < gridSize; i++)
+    for (int i = 0; i < gridSize * (*gridColSize); i++)
     {
-        for (int j = 0; j < *gridColSize; j++)
-        {
-            int area;
-            area = walkIsland(grid, gridSize, gridColSize, i, j, checked);
-            maxArea = (area > maxArea) ? area : maxArea;
-        }
+        int area;
+        area = walkIsland(grid, gridSize, gridColSize, i / (*gridColSize),
+                          i % (*gridColSize), checked);
+        maxArea = (area > maxArea) ? area : maxArea;
     }
     return maxArea;
 }
