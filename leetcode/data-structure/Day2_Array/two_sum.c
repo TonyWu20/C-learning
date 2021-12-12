@@ -52,12 +52,12 @@ void lookup(struct hashNode *hashTab, int *nums, int numsSize, int target,
 }
 int *twoSum(int *nums, int numsSize, int target, int *returnSize)
 {
-    struct hashNode *hashTab[PRIME];
+    struct hashNode hashTab[PRIME];
     for (int i = 0; i < PRIME; ++i)
     {
-        hashTab[i]->val = 0;
-        hashTab[i]->index = -1;
-        hashTab[i]->link = NULL;
+        hashTab[i].val = 0;
+        hashTab[i].index = -1;
+        hashTab[i].link = NULL;
     }
     for (int i = 0; i < numsSize; ++i)
     {
@@ -101,7 +101,6 @@ int *twoSum(int *nums, int numsSize, int target, int *returnSize)
             node = next;
         }
     }
-
     return res;
 }
 
