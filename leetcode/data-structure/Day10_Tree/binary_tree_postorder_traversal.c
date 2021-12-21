@@ -8,59 +8,42 @@ struct TreeNode
     struct TreeNode *right;
 };
 
-int *postorderTraversal(struct TreeNode *root, int *returnSize)
+void pushNode(struct TreeNode ***stack, struct TreeNode *np, int *stackTop)
 {
-    int stackSize = 10;
-    int retArrSize = 10;
+    *stack = realloc(*stack, sizeof(struct TreeNode *) * (*stackTop + 3));
+    (*stackTop) += 2;
+    (*stack)[*stackTop - 1] = np;
+    (*stack)[*stackTop] = np;
+}
+int *postOrderTraversal(struct TreeNode *root, int *returnSize)
+{
+    struct TreeNode **stack = NULL;
     int stackTop = -1;
-    int retPtr = -1;
-    struct TreeNode **nodeStack = calloc(stackSize, sizeof(struct TreeNode *));
-    int *ret = malloc(sizeof(int) * retArrSize);
-    struct TreeNode *curr = root;
-    int done = 0;
-    while (!done)
+    int *result = NULL;
+    int resultLen = 0;
+    struct TreeNode *np = root;
+    pushNode(&stack, np, &stackTop);
+    np = np->left;
+    while (stackTop > -1)
     {
-        while (curr)
+        while (np)
         {
-            if (stackTop + 2 >= stackSize)
-            {
-                stackSize *= 2;
-                nodeStack =
-                    realloc(nodeStack, sizeof(struct TreeNode *) * stackSize);
-                nodeStack[++stackTop] = curr;
-                nodeStack[++stackTop] = curr;
-                curr = curr->left;
-            }
-            else
-            {
-                nodeStack[++stackTop] = curr;
-                nodeStack[++stackTop] = curr;
-                curr = curr->left;
-            }
+            pushNode(&stack, np, &stackTop);
+            np = np->left;
         }
-        if (stackTop == -1)
-            done = 1;
-        curr = nodeStack[stackTop--];
-        if (stackTop >= -1 && curr == nodeStack[stackTop])
+        np = stack[stackTop--];
+        if (np == stack[stackTop])
         {
-            curr = curr->right;
+            np = np->right;
         }
         else
         {
-            if ((retPtr + 1) >= retArrSize)
-            {
-                retArrSize++;
-                ret = realloc(ret, sizeof(int) * retArrSize);
-                ret[++retPtr] = curr->val;
-                curr = NULL;
-            }
-            else
-            {
-                ret[++retPtr] = curr->val;
-                curr = NULL;
-            }
+            result = realloc(result, sizeof(int) * (++resultLen + 1));
+            result[resultLen - 1] = np->data;
+            np = NULL;
         }
     }
-    *returnSize = retArrSize;
-    return ret;
+    free(stack);
+    *returnSize = resultLen;
+    return result;
 }
