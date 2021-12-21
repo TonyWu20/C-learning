@@ -39,7 +39,7 @@ int *postOrderTraversal(struct TreeNode *root, int *returnSize)
         else
         {
             result = realloc(result, sizeof(int) * (++resultLen + 1));
-            result[resultLen - 1] = np->data;
+            result[resultLen - 1] = np->val;
             np = NULL;
         }
     }
