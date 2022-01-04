@@ -1,77 +1,50 @@
 #include <stdlib.h>
-typedef enum
-{
-    false,
-    true
-} bool;
-struct Point
-{
-    int x;
-    int y;
-};
 
-bool isValid(char **board, int rowSize, int colSize, int i, int j)
+void floodFill(char **board, int rowSize, int colSize, int i, int j)
 {
     if (i < 0 || i >= rowSize || j < 0 || j >= colSize)
-        return false;
-    if (i - 1 >= 0)
-}
-
-void search(char **board, int rowSize, int colSize, int i, int j,
-            struct Point *q, int *front, int *rear)
-{
-    q[(*rear)++].x = i;
-    q[(*rear)].y = j;
-    board[i][j] = '-';
-    int old_front = *front;
-    while (*front <= *rear)
+        return;
+    else if (board[i][j] == '-' || board[i][j] == 'X')
+        return;
+    else if (board[i][j] == 'O')
     {
-        struct Point currPoint = q[*front];
-        int x, y;
-        x = currPoint.x;
-        y = currPoint.y;
-        // If reach to the boarder, than the recorded region is not valid,
-        // revert to original
-        if (x == 0 || x == rowSize - 1 || y == 0 || y == colSize - 1)
-        {
-            for (int i = old_front; i < (*rear); ++i)
-            {
-                board[q[i].x][q[i].y] = 'O';
-            }
-            return; // Quit
-        }
-        (*front)++;
-        if (x - 1 >= 0 && board[x - 1][y] == 'O')
-        {
-            q[(*rear)++].x = x - 1;
-            q[(*rear)].y = y;
-            board[x - 1][y] = '-';
-        }
-        if (x + 1 < rowSize && board[x + 1][y] == 'O')
-        {
-            q[(*rear)++].x = x + 1;
-            q[(*rear)].y = y;
-            board[x + 1][y] = '-';
-        }
+        board[i][j] = '-';
+        floodFill(board, rowSize, colSize, i - 1, j);
+        floodFill(board, rowSize, colSize, i + 1, j);
+        floodFill(board, rowSize, colSize, i, j + 1);
+        floodFill(board, rowSize, colSize, i, j - 1);
     }
 }
+
 void solve(char **board, int boardSize, int *boardColSize)
 {
-    int queueSize = boardSize * (*boardColSize);
-    struct Point *q = malloc(sizeof(struct Point) * queueSize);
-    int front = 0, rear = 0;
-    int curr_front, curr_rear;
-    curr_front = front;
+    if (boardSize < 3 || *boardColSize < 3)
+        return;
+    int row, col;
+    for (row = 0; row < boardSize; row++)
+    {
+        floodFill(board, boardSize, *boardColSize, row, 0);
+        floodFill(board, boardSize, *boardColSize, row, *boardColSize - 1);
+    }
+    for (col = 0; col < *boardColSize; ++col)
+    {
+        floodFill(board, boardSize, *boardColSize, 0, col);
+        floodFill(board, boardSize, *boardColSize, boardSize - 1, col);
+    }
     for (int i = 0; i < boardSize; ++i)
     {
         for (int j = 0; j < *boardColSize; ++j)
         {
             if (board[i][j] == 'O')
-            {
-                q[++rear].x = i;
-                q[rear].y = j;
-                board[i][j] = '-';
-            }
+                board[i][j] = 'X';
+        }
+    }
+    for (int i = 0; i < boardSize; ++i)
+    {
+        for (int j = 0; j < *boardColSize; ++j)
+        {
+            if (board[i][j] == '-')
+                board[i][j] = 'O';
         }
     }
 }
