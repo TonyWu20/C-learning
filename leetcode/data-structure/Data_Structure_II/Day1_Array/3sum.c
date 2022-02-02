@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <string.h>
 int cmpfunc(const void *a, const void *b)
 {
     return *(int *)a - *(int *)b;
@@ -9,52 +9,54 @@ int cmpfunc(const void *a, const void *b)
 int **threeSum(int *nums, int numsSize, int *returnSize,
                int **returnColumnSizes)
 {
-    if (!nums || numsSize < 3)
-    {
-        *returnSize = 0;
-        *returnColumnSizes = NULL;
+    *returnSize = 0;
+    if (numsSize < 3)
         return NULL;
-    }
+    // 先排序
     qsort(nums, numsSize, sizeof(int), cmpfunc);
-    int count = 0;
-    int **res = NULL;
-
-    for (int i = 0; i < numsSize; ++i)
+    int unit = 5000;
+    int **arr = (int **)malloc(sizeof(int *) * unit);
+    *returnColumnSizes = (int *)malloc(sizeof(int) * unit);
+    int i, l, r, target;
+    for (i = 0; i < numsSize - 2; ++i)
     {
-        int start = i + 1;
-        int end = numsSize - 1;
-        int sum;
+        if (nums[i] > 0)
+            break;
+        // avoid duplication
         if (i > 0 && nums[i] == nums[i - 1])
             continue;
-        while (start < end)
+        // nums[i] + target == 0
+        target = -nums[i];
+        l = i + 1;
+        r = numsSize - 1;
+        while (l < r)
         {
-            sum = nums[i] + nums[start] + nums[end];
-            if (sum == 0)
-            {
-                count++;
-                res = realloc(res, sizeof(int *) * count);
-                res[count - 1] = malloc(sizeof(int) * 3);
-                res[count - 1][0] = nums[i];
-                res[count - 1][1] = nums[start];
-                res[count - 1][2] = nums[end];
-                while (start < end && nums[start] == nums[start + 1])
-                    start++;
-                while (start < end && nums[end] == nums[end - 1])
-                    end--;
-                start++;
-                end--;
-            }
-            else if (sum > 0)
-                end--;
+            if (nums[l] + nums[r] < target)
+                ++l;
+            else if (nums[l] + nums[r] > target)
+                --r;
             else
-                start++;
+            {
+                (*returnColumnSizes)[*returnSize] = 3;
+                arr[*returnSize] = (int *)malloc(sizeof(int) * 3);
+                arr[*returnSize][0] = nums[i];
+                arr[*returnSize][1] = nums[l++];
+                arr[(*returnSize)++][2] = nums[r--];
+                if (*returnSize == unit)
+                {
+                    unit <<= 1;
+                    arr = (int **)realloc(arr, sizeof(int *) * unit);
+                    *returnColumnSizes =
+                        (int *)realloc(*returnColumnSizes, sizeof(int) * unit);
+                }
+                // avoid duplication
+                while (l < r && nums[l] == nums[l - 1])
+                    ++l;
+                // avoid duplication
+                while (l < r && nums[r] == nums[r + 1])
+                    --r;
+            }
         }
     }
-    *returnSize = count;
-    *returnColumnSizes = malloc(sizeof(int) * count);
-    for (int i = 0; i < count; ++i)
-    {
-        (*returnColumnSizes)[i] = 3;
-    }
-    return res;
+    return arr;
 }
