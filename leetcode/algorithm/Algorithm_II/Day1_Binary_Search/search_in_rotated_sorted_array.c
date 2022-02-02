@@ -22,7 +22,5 @@ int binarySearch(int *nums, int l, int r, int target)
 
 int search(int *nums, int numsSize, int target)
 {
-    if (numsSize < 1)
-        return -1;
     return binarySearch(nums, 0, numsSize - 1, target);
 }
