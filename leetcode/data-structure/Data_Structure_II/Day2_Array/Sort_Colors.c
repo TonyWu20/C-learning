@@ -1,4 +1,7 @@
-
+/***********************************************************************
+ * The problem is actually sorting an array of multiple 0, 1, 2 in-place
+ * Use quicksort to do it
+ ***********************************************************************/
 void swap(int *a, int *b)
 {
     int temp = *a;
