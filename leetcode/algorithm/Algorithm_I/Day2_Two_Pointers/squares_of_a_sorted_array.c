@@ -1,37 +1,30 @@
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 /**
  * Note: The returned array must be malloced, assume caller calls free().
  */
-int squares(int val)
-{
-    return val * val;
-}
 
 int *sortedSquares(int *nums, int numsSize, int *returnSize)
 {
+    int lo = 0;
+    int hi = numsSize - 1;
+    int ptr = numsSize - 1;
     int *res = malloc(numsSize * sizeof(int));
-    for (int i = 0; i < numsSize; ++i)
+    while (lo <= hi)
     {
-        nums[i] = squares(nums[i]);
-    }
-    *returnSize = numsSize;
-    int leftPtr = 0, rightPtr = numsSize - 1, ptr = numsSize - 1;
-    /** The bigger values of the squared number in the original array are
-     *  located in the beginning and the end. So traverse the res array from
-     *  the end and put in the bigger value.
-     */
-    while (leftPtr <= rightPtr && ptr >= 0)
-    {
-        if (nums[leftPtr] < nums[rightPtr])
+        if (abs(nums[lo]) > abs(nums[hi]))
         {
-            res[ptr--] = nums[rightPtr--];
+            res[ptr--] = nums[lo] * nums[lo];
+            lo++;
         }
         else
         {
-            res[ptr--] = nums[leftPtr++];
+            res[ptr--] = nums[hi] * nums[hi];
+            hi--;
         }
     }
+    *returnSize = numsSize;
     return res;
 }
