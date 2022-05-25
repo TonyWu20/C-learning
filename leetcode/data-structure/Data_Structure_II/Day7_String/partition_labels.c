@@ -6,7 +6,8 @@ int *partitionLabels(char *s, int *returnSize)
     int last[26] = {0};
     for (int i = 0; s[i] != '\0'; ++i)
     {
-        last[s[i] - 'a'] = i;
+        last[s[i] - 'a'] =
+            i; // Record the last appearance index of every character
     }
     int start, anchor;
     start = anchor = 0;
@@ -14,8 +15,11 @@ int *partitionLabels(char *s, int *returnSize)
     int *ans = NULL;
     for (int i = 0; s[i] != '\0'; ++i)
     {
-        anchor = (anchor > last[s[i] - 'a']) ? anchor : last[s[i] - 'a'];
-        if (i == anchor)
+        if (anchor <= last[s[i] - 'a'])
+        {
+            anchor = last[s[i] - 'a']; // Update anchor to the larger last index
+        }
+        if (i == anchor) // Reach the largest partition position
         {
             (*returnSize)++;
             ans = realloc(ans, sizeof(int) * (*returnSize));
