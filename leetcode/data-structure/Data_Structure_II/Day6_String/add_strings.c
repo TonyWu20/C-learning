@@ -3,13 +3,17 @@
 
 char *addStrings(char *num1, char *num2)
 {
+    // Decide the length for result
     int len1 = strlen(num1);
     int len2 = strlen(num2);
     int len3 = (len1 > len2) ? len1 : len2;
     int size3;
+    /* When two strings are equal in length,
+     * tell whether the sum of the first digit exceeds 9
+     */
     if (len1 == len2 && (num1[0] + num2[0] > '0' + '0' + 9))
         len3++;
-    size3 = len3 + 1;
+    size3 = len3 + 1; // for EOF char
     char *num3 = malloc((size3) * sizeof(char));
     int digit, carry;
     carry = 0;
